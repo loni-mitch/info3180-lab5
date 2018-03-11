@@ -31,7 +31,7 @@ def about():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
-    if request.method == "POST":
+    if request.method == "POST" and form.validate_on_submit():
         # change this to actually validate the entire form submission
         # and not just one field
         username = form.username.data
@@ -73,6 +73,13 @@ def load_user(id):
 @login_required
 def secure_page():
     return render_template('secure_page.html')
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash('You have logged out.', 'danger')
+    return redirect(url_for('home'))    
     
 @app.route('/<file_name>.txt')
 def send_text_file(file_name):
