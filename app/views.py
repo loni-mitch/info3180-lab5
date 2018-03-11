@@ -69,7 +69,11 @@ def load_user(id):
 # The functions below should be applicable to all Flask apps.
 ###
 
-
+@app.route('/secure-page')
+@login_required
+def secure_page():
+    return render_template('secure_page.html')
+    
 @app.route('/<file_name>.txt')
 def send_text_file(file_name):
     """Send your static text file."""
